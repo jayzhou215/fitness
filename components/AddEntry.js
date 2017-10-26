@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { getMetricMetaInfo, timeToString } from '../utils/helpers'
+import { getMetricMetaInfo, timeToString, getLoggedDisplayText } from '../utils/helpers'
 import UdaciSlider from './UdaciSlider'
 import UdaciStepper from './UdaciStepper'
 import DateHeader from './DateHeader'
 import TextButton from './TextButton'
 import { Ionicons } from '@expo/vector-icons'
 import { submitEntry, removeEntry } from '../utils/api'
+import { connect } from 'react-redux'
+import { addEntry } from '../actions/index'
 
 function SubmitButton ({onPress}) {
   return (
@@ -16,7 +18,7 @@ function SubmitButton ({onPress}) {
   )
 }
 
-export default class AddEntry extends Component {
+class AddEntry extends Component {
 
   state = {
     run : 0,
@@ -56,11 +58,11 @@ export default class AddEntry extends Component {
   submit = () => {
     const key = timeToString()
     const entry = this.state
-    // udpate redux
-
+    this.props.dispatch(addEntry({
+      [key] : entry
+    }))
     // route back to home
 
-    // save to db
     submitEntry(key, entry)
 
     // clean notification
@@ -75,7 +77,10 @@ export default class AddEntry extends Component {
 
   reset = () => {
     const key = timeToString()
-    // udpate redux
+    this.props.dispatch(addEntry({
+      [key] : getLoggedDisplayText()
+    }))
+
     removeEntry(key)
     // route to home
 
@@ -84,7 +89,7 @@ export default class AddEntry extends Component {
   }
 
   render() {
-    if (this.props.todayLogged) {
+    if (this.props.alreadyLogged) {
       return (
         <View>
           <Ionicons name='ios-happy-outline' size={100} />
@@ -129,3 +134,12 @@ export default class AddEntry extends Component {
     )
   }
 }
+
+function mapStateToProp(state) {
+  const key = timeToString()
+  return {
+    alreadyLogged : state[key] && typeof state[key].today === 'undefined'
+  }
+}
+
+export default connect(mapStateToProp)(AddEntry)
