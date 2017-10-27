@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { getMetricMetaInfo, timeToString, getLoggedDisplayText } from '../utils/helpers'
 import UdaciSlider from './UdaciSlider'
 import UdaciStepper from './UdaciStepper'
@@ -91,9 +91,9 @@ class AddEntry extends Component {
   render() {
     if (this.props.alreadyLogged) {
       return (
-        <View>
-          <Ionicons name='ios-happy-outline' size={100} />
-          <Text>You already logged your infomation for today</Text>
+        <View style={styles.container}>
+          <Ionicons name='ios-happy-outline' style={styles.image}/>
+          <Text style={styles.text}>You already logged your infomation for today</Text>
           <TextButton onPress={this.reset}>
             Reset
           </TextButton>
@@ -141,5 +141,23 @@ function mapStateToProp(state) {
     alreadyLogged : state[key] && typeof state[key].today === 'undefined'
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  text: {
+    // alignSelf: 'stretch',
+    // height: 100,
+    // marginTop: 10,
+  }
+
+})
 
 export default connect(mapStateToProp)(AddEntry)

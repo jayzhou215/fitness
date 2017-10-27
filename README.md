@@ -53,6 +53,11 @@ render () {
 # [Window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage.html)
 
+# cross platform api
+Platform.OS === 'ios'
+  ? <Ionicons name='ios-pizza' size={100} color='red' />
+  : <Ionicons name='md-pizza' size={100} color='red' />
+
 # In China
 This code may help speed up install
 ```
