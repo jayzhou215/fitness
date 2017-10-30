@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { getMetricMetaInfo, timeToString, getLoggedDisplayText } from '../utils/helpers'
 import UdaciSlider from './UdaciSlider'
 import UdaciStepper from './UdaciStepper'
@@ -9,11 +9,14 @@ import { Ionicons } from '@expo/vector-icons'
 import { submitEntry, removeEntry } from '../utils/api'
 import { connect } from 'react-redux'
 import { addEntry } from '../actions/index'
+import { white, red, purple } from '../utils/colors'
 
 function SubmitButton ({onPress}) {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>Submit</Text>
+    <TouchableOpacity
+      style={ Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn }
+      onPress={onPress}>
+      <Text style={ styles.submitText } >Submit</Text>
     </TouchableOpacity>
   )
 }
@@ -143,19 +146,29 @@ function mapStateToProp(state) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  iosSubmitBtn: {
+    backgroundColor: purple,
+    borderRadius: 7,
+    padding: 10,
+    marginLeft: 40,
+    marginRight: 40,
+    height: 45,
+  },
+  androidSubmitBtn: {
+    backgroundColor: purple,
+    borderRadius: 2,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    alignSelf: 'flex-end',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  image: {
-    width: 100,
-    height: 100,
-  },
-  text: {
-    // alignSelf: 'stretch',
-    // height: 100,
-    // marginTop: 10,
+  submitText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
   }
 
 })
