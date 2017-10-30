@@ -94,10 +94,10 @@ class AddEntry extends Component {
   render() {
     if (this.props.alreadyLogged) {
       return (
-        <View style={styles.container}>
-          <Ionicons name='ios-happy-outline' style={styles.image}/>
-          <Text style={styles.text}>You already logged your infomation for today</Text>
-          <TextButton onPress={this.reset}>
+        <View style={styles.center}>
+          <Ionicons name={Platform.OS === 'ios' ? 'ios-happy-outline' : 'md-happy'} size={100}/>
+          <Text>You already logged your infomation for today</Text>
+          <TextButton style={{padding: 10}} onPress={this.reset}>
             Reset
           </TextButton>
         </View>
@@ -107,14 +107,16 @@ class AddEntry extends Component {
     const metaInfos = getMetricMetaInfo()
     const date = (new Date()).toString()
     return (
-      <View>
+      <View style={ styles.container }>
 
         <DateHeader date={date}/>
         {Object.keys(metaInfos).map((key)=> {
           const {getIcon, type, ...rest } = metaInfos[key]
           const value = this.state[key]
           return (
-            <View key={key}>
+            <View
+              style={ styles.row }
+              key={key}>
               {getIcon()}
               {type === 'slider'
                   ? <UdaciSlider
@@ -146,6 +148,17 @@ function mapStateToProp(state) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: white,
+    padding: 20,
+    flex: 1,
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
   iosSubmitBtn: {
     backgroundColor: purple,
     borderRadius: 7,
@@ -169,7 +182,12 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 22,
     textAlign: 'center',
-  }
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 
 })
 
