@@ -26,7 +26,6 @@ function setDummyData () {
         }
       : null
   }
-
   AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData))
 
   return dummyData
@@ -44,7 +43,6 @@ function setMissingDates (dates) {
       dates[strTime] = null
     }
   }
-
   return dates
 }
 
