@@ -105,7 +105,7 @@ class AddEntry extends Component {
     }
 
     const metaInfos = getMetricMetaInfo()
-    const date = (new Date()).toString()
+    const date = Platform.OS === 'ios' ? (new Date()).toLocaleDateString() : new Date().toDateString()
     return (
       <View style={ styles.container }>
 
