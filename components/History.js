@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, Platform, StyleSheet } from 'react-native'
+import { View, Text, Platform, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries, addEntry } from '../actions/index'
 import { fetchCalenderResultes } from '../utils/api'
 import { timeToString, getLoggedDisplayText } from '../utils/helpers'
 import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { white } from '../utils/colors'
+import DateHeader from './DateHeader'
 
 class History extends Component {
 
@@ -25,17 +26,27 @@ class History extends Component {
   renderItem = ({today, ...metrics}, formattedDate, key) => (
     <View style={styles.item}>
       {today
-        ? <Text>{JSON.stringify(today)}</Text>
-        : <Text>{JSON.stringify(metrics)}</Text>
+        ? <View>
+            <DateHeader date={formattedDate} />
+            <Text style={styles.noDataText}>
+              {today}
+            </Text>
+          </View>
+        : <View>
+            <TouchableOpacity onPress={()=> console.log("pressed")}>
+              <Text>{JSON.stringify(metrics)}</Text>
+            </TouchableOpacity>
+          </View>
       }
     </View>
   )
 
   renderEmptyDate (formattedDate) {
     return (
-      <View>
-        <Text>No data for this day</Text>
-      </View>
+      <View style={styles.item}>
+          <DateHeader date={formattedDate}/>
+          <Text style={styles.noDataText}>No data for this day</Text>
+        </View>
     )
   }
 
@@ -66,8 +77,12 @@ const styles = StyleSheet.create({
     shadowOffset: {
       width: 0,
       height: 3,
-    }
-
+    },
+  },
+  noDataText: {
+    fontSize: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
   }
 })
 
