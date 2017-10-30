@@ -4564,6 +4564,10 @@ react-native@^0.48.4:
     xtend ">=4.0.0 <4.1.0-0"
     yargs "^6.4.0"
 
+react-navigator@^0.0.0-0:
+  version "0.0.0-0"
+  resolved "http://registry.npm.taobao.org/react-navigator/download/react-navigator-0.0.0-0.tgz#8c8769665d734d7b8b9b4bd7e06c027d086566b2"
+
 react-proxy@^1.1.7:
   version "1.1.8"
   resolved "http://registry.npm.taobao.org/react-proxy/download/react-proxy-1.1.8.tgz#9dbfd9d927528c3aa9f444e4558c37830ab8c26a"

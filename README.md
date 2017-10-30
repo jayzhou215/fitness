@@ -53,10 +53,18 @@ render () {
 # [Window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage.html)
 
+[Understanding React Native flexbox layout](https://medium.com/the-react-native-log/understanding-react-native-flexbox-layout-7a528200afd4)
 # cross platform api
+* [Platform Specific Code](https://facebook.github.io/react-native/docs/platform-specific-code.html)
 Platform.OS === 'ios'
   ? <Ionicons name='ios-pizza' size={100} color='red' />
   : <Ionicons name='md-pizza' size={100} color='red' />
+
+# CSS in JS Libraries
+[Glamorous](https://github.com/robinpowered/glamorous-native)
+[Styled Components](https://github.com/styled-components/styled-components)
+
+
 
 # In China
 This code may help speed up install
