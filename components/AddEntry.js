@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { addEntry } from '../actions/index'
 import { white, red, purple } from '../utils/colors'
 import { NavigationActions } from 'react-navigation'
+import { clearNotification, setLocalNotification } from '../utils/helpers'
 
 function SubmitButton ({onPress}) {
   return (
@@ -76,6 +77,9 @@ class AddEntry extends Component {
       sleep : 0,
       eat : 0,
     }))
+
+    clearNotification()
+      .then(setLocalNotification)
   }
 
   reset = () => {

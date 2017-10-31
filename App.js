@@ -11,6 +11,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import EntryDetail from './components/EntryDetail'
 import Live from './components/Live'
+import { setLocalNotification } from './utils/helpers'
 
 const Tabs = TabNavigator({
   History: {
@@ -81,6 +82,7 @@ function UdaciStatusBar ({ backgroundColor, ...props }) {
 export default class App extends React.Component {
 
   componentDidMount(){
+    setLocalNotification()
   }
 
   render() {
