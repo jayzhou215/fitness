@@ -1,3 +1,9 @@
+# install
+> yarn add watchman
+yarn install
+yarn start
+
+
 # icon resources
 https://github.com/oblador/react-native-vector-icons
 https://expo.github.io/vector-icons/
@@ -83,6 +89,10 @@ static navigationOptions = ({ navigation }) => {
 }
 ```
 # [Stack Navigation in React Native](https://medium.com/@swathylenjini/stack-navigation-in-react-native-2cd00374ff3a)
+
+# native features
+## [Location](https://docs.expo.io/versions/latest/sdk/location.html)
+
 
 # In China
 This code may help speed up install
