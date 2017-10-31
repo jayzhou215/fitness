@@ -42,7 +42,10 @@ class History extends Component {
             </Text>
           </View>
         : <View>
-            <TouchableOpacity onPress={()=> console.log("pressed")}>
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate(
+                'EntryDetail',
+                {entryId: key}
+              )}>
               <MetricCard date={formattedDate} metrics={metrics}/>
             </TouchableOpacity>
           </View>

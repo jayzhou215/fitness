@@ -64,7 +64,24 @@ Platform.OS === 'ios'
 [Glamorous](https://github.com/robinpowered/glamorous-native)
 [Styled Components](https://github.com/styled-components/styled-components)
 
+# [StatusBar props](https://facebook.github.io/react-native/docs/statusbar.html#props)
 
+# navigation
+[TabNavigator](https://reactnavigation.org/docs/navigators/tab)
+StackNavigator
+this.props.navigation.navigate()
+this.props.navigation.state.params.entryId
+```
+static navigationOptions = ({ navigation }) => {
+  const { entryId } = navigation.state.params
+  const year = entryId.slice(0, 4)
+  const month = entryId.slice(5, 7)
+  const day = entryId.slice(8)
+  return {
+    title : `${month}/${day}/${year}`
+  }
+}
+```
 
 # In China
 This code may help speed up install
