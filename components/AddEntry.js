@@ -10,6 +10,7 @@ import { submitEntry, removeEntry } from '../utils/api'
 import { connect } from 'react-redux'
 import { addEntry } from '../actions/index'
 import { white, red, purple } from '../utils/colors'
+import { NavigationActions } from 'react-navigation'
 
 function SubmitButton ({onPress}) {
   return (
@@ -64,11 +65,10 @@ class AddEntry extends Component {
     this.props.dispatch(addEntry({
       [key] : entry
     }))
-    // route back to home
+    this.toHome()
 
     submitEntry(key, entry)
 
-    // clean notification
     this.setState(()=>({
       run : 0,
       bike : 0,
@@ -84,11 +84,16 @@ class AddEntry extends Component {
       [key] : getLoggedDisplayText()
     }))
 
+    this.toHome()
+
     removeEntry(key)
-    // route to home
 
-    // clean db
+  }
 
+  toHome = () =>{
+    this.props.navigation.dispatch(NavigationActions.back({
+      key: 'AddEntry'
+    }))
   }
 
   render() {
