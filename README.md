@@ -82,6 +82,7 @@ static navigationOptions = ({ navigation }) => {
   }
 }
 ```
+# [Stack Navigation in React Native](https://medium.com/@swathylenjini/stack-navigation-in-react-native-2cd00374ff3a)
 
 # In China
 This code may help speed up install
