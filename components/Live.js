@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { Foundation } from '@expo/vector-icons'
+import { Location, Permissions } from 'expo'
+import { calculateDirection } from '../utils/helpers'
 
 export default class Live extends Component {
 
@@ -11,8 +13,51 @@ export default class Live extends Component {
     direction: '',
   }
 
-  askPermission = () => {
+  componentDidMount() {
+    Permissions.getAsync(Permissions.LOCATION).then(({status}) => {
+      if (status === 'granted') {
+        return this.setLocation()
+      }
+      this.setState(()=> ({
+        status
+      }))
+    })
+    .catch((error)=>{
+      console.warn('Error getting location permission: ', error)
+      this.setState(()=>({
+        status: 'undetermined',
+      }))
+    })
+  }
 
+  setLocation = () => {
+    Location.watchPositionAsync({
+      enableHighAccuracy: true,
+      timeInterval: 1,
+      distanceInterval: 1,
+    }, ({coords}) => {
+      const newDirection = calculateDirection(coords.heading)
+      const {direction} = this.state
+      this.setState(()=>({
+        coords,
+        status: 'granted',
+        direction: newDirection,
+      }))
+
+    })
+  }
+
+  askPermission = () => {
+    Permissions.askAsync(Permissions.LOCATION)
+      .then( ({status}) => {
+        if (status === 'granted') {
+          return this.setLocation()
+        }
+        this.setState(()=> ({ status }))
+      } )
+      .catch((error) => {
+        console.warn('Error asking location permission: ', error)
+      })
   }
 
   render(){
@@ -30,7 +75,7 @@ export default class Live extends Component {
         </View>
       )
     }
-    if (status === 'undeterminded') {
+    if (status === 'undetermined') {
       return  (
         <View style={styles.center}>
           <Foundation name='alert' size={50}/>
@@ -41,9 +86,28 @@ export default class Live extends Component {
         </View>
       )
     }
+
     return (
-      <View>
-        <Text>Live</Text>
+      <View style={styles.container}>
+        <View style={styles.directionContainer}>
+          <Text style={styles.header}>You ar heading</Text>
+          <Text style={styles.direction}>{direction}</Text>
+        </View>
+        <View style={styles.metricContainer}>
+          <View style={styles.metric}>
+            <Text style={[styles.header, {color: white}]}>Altitude</Text>
+            <Text style={[styles.subHeader, {color: white}]}>
+              {Math.round(coords.altitude * 3.2888)} Feet
+            </Text>
+          </View>
+          <View style={styles.metric}>
+            <Text style={[styles.header, {color: white}]}>Speed</Text>
+            <Text style={[styles.subHeader, {color: white}]}>
+              {(coords.speed * 2.2369).toFixed(1)} MPH
+            </Text>
+          </View>
+
+        </View>
       </View>
     )
   }
@@ -71,5 +135,38 @@ const styles = StyleSheet.create({
   buttonText: {
     color: white,
     fontSize: 20,
-  }
+  },
+  directionContainer: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  header: {
+    fontSize: 35,
+    textAlign: 'center',
+  },
+  direction: {
+    color: purple,
+    fontSize: 120,
+    textAlign: 'center',
+  },
+  metricContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: purple,
+  },
+  metric: {
+    flex: 1,
+    paddingTop: 15,
+    paddingBottom: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  subHeader: {
+    fontSize: 25,
+    textAlign: 'center',
+    marginTop: 5,
+  },
 })
